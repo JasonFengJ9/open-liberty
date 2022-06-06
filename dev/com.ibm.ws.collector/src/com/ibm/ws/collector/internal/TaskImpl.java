@@ -177,7 +177,7 @@ public class TaskImpl extends Task implements Runnable {
          *         the number of seconds needed to sleep.
          */
         long go() {
-            long currentTime = System.currentTimeMillis();
+            long currentTime = System.nanoTime() / 1000000;
             long oldestTime = 0;
             //add new time if there are less than maxEvents in ringBuffer
             if (ringBuffer.size() < maxEvents) {
@@ -195,7 +195,7 @@ public class TaskImpl extends Task implements Runnable {
 
                 }
                 //change currentTime to the new currentTime after the sleep
-                currentTime = System.currentTimeMillis();
+                currentTime = System.nanoTime() / 1000000;
                 ringBuffer.add(currentTime);
                 if (!this.throttling) {
                     Tr.info(tc, "MAXEVENTS_EXCEEDS_MAXRATE", Thread.currentThread().getName(), maxEvents);
